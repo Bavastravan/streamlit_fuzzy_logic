@@ -45,10 +45,22 @@ with col1:
     st.subheader("📊 Derajat Keanggotaan")
     st.markdown("Hasil perhitungan nilai fuzzy untuk IPK:")
     
-    # Menampilkan metrik
-    st.metric("Tidak Layak", f"{derajat['Tidak Layak']:.2f}")
-    st.metric("Dipertimbangkan", f"{derajat['Dipertimbangkan']:.2f}")
-    st.metric("Layak", f"{derajat['Layak']:.2f}")
+    # Menampilkan metrik (dibagi menjadi 3 kolom kecil agar sejajar)
+    m1, m2, m3 = st.columns(3)
+    m1.metric("Tidak Layak", f"{derajat['Tidak Layak']:.2f}")
+    m2.metric("Dipertimbangkan", f"{derajat['Dipertimbangkan']:.2f}")
+    m3.metric("Layak", f"{derajat['Layak']:.2f}")
+
+    st.markdown("<br>", unsafe_allow_html=True) # Memberi sedikit jarak spasi
+
+    # --- TAMBAHAN TABEL DERAJAT KEANGGOTAAN ---
+    st.markdown("**Tabel Rincian Derajat Keanggotaan:**")
+    tabel_data = {
+        "Himpunan Fuzzy": ["Tidak Layak", "Dipertimbangkan", "Layak"],
+        "Nilai Derajat (μ)": [f"{derajat['Tidak Layak']:.2f}", f"{derajat['Dipertimbangkan']:.2f}", f"{derajat['Layak']:.2f}"]
+    }
+    st.table(tabel_data)
+    # ----------------------------------------
 
     # Interpretasi Hasil
     st.subheader("💡 Interpretasi Hasil")
@@ -57,7 +69,7 @@ with col1:
     nilai_dominan = derajat[kategori_dominan]
     
     if nilai_dominan > 0:
-        st.success(f"Berdasarkan IPK **{ipk}**, status mahasiswa masuk dalam kategori **{kategori_dominan}** dengan tingkat keyakinan **{nilai_dominan:.2f}**.")
+        st.success(f"Berdasarkan IPK **{ipk}**, status mahasiswa masuk dalam kategori dominan **{kategori_dominan}** dengan tingkat keyakinan **{nilai_dominan:.2f}**.")
     else:
         st.warning("Nilai tidak terdefinisi dalam himpunan fuzzy.")
 

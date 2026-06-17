@@ -46,10 +46,22 @@ with col1:
     st.subheader("📊 Derajat Keanggotaan")
     st.markdown("Hasil perhitungan nilai fuzzy:")
     
-    # Menampilkan metrik
-    st.metric("Lancar", f"{derajat['Lancar']:.2f}")
-    st.metric("Padat", f"{derajat['Padat']:.2f}")
-    st.metric("Macet", f"{derajat['Macet']:.2f}")
+    # Menampilkan metrik (dibagi menjadi 3 kolom kecil agar sejajar)
+    m1, m2, m3 = st.columns(3)
+    m1.metric("Lancar", f"{derajat['Lancar']:.2f}")
+    m2.metric("Padat", f"{derajat['Padat']:.2f}")
+    m3.metric("Macet", f"{derajat['Macet']:.2f}")
+
+    st.markdown("<br>", unsafe_allow_html=True) # Memberi sedikit jarak spasi
+
+    # --- TAMBAHAN TABEL DERAJAT KEANGGOTAAN ---
+    st.markdown("**Tabel Rincian Derajat Keanggotaan:**")
+    tabel_data = {
+        "Himpunan Fuzzy": ["Lancar", "Padat", "Macet"],
+        "Nilai Derajat (μ)": [f"{derajat['Lancar']:.2f}", f"{derajat['Padat']:.2f}", f"{derajat['Macet']:.2f}"]
+    }
+    st.table(tabel_data)
+    # ----------------------------------------
 
     # Interpretasi Hasil
     st.subheader("💡 Interpretasi Hasil")
